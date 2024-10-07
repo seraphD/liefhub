@@ -2,5 +2,7 @@
 </script>
 
 <template>
-   This is home view
+   <div>
+    This is homeview
+   </div>
 </template>
