@@ -5,10 +5,10 @@
       <div v-if="visible" class="custom-sidebar">
         <h2>Menu</h2>
         <ul class="menu-items">
-          <li><a href="/home">Home</a></li>
-          <li><a href="/jira">Jira</a></li>
-          <li><a href="/finanac">Finance</a></li>
-          <li><a href="/fitness">Fitness</a></li>
+          <router-link to="/" class="menu-link">Home</router-link>
+          <router-link to="/jira" class="menu-link">Jira</router-link>
+          <router-link to="/finance" class="menu-link">Finance</router-link>
+          <router-link to="/fitness" class="menu-link">Fitness</router-link>
         </ul>
         <PrimeButton
           label="Toggle Dark Mode"
@@ -75,18 +75,23 @@ export default {
 }
 
 .menu-items {
-  list-style: none;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   margin: 0;
 }
 
-.menu-items li {
+.menu-link {
   margin-bottom: 1rem;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
 }
 
-.menu-items a {
-  color: inherit;
-  text-decoration: none;
+.menu-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .toggle-button {
