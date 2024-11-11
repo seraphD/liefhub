@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Menu from './components/Menu.vue';
+import MenuComponent from './components/MenuComponent.vue'
 </script>
 
 <template>
   <div class="main-container">
-    <Menu class="menu-container" />
+    <MenuComponent class="menu-container" />
     <RouterView class="main-view-container" />
   </div>
 </template>
