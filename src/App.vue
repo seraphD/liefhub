@@ -1,14 +1,33 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import MenuComponent from './components/MenuComponent.vue'
-</script>
-
 <template>
-  <div class="main-container">
-    <MenuComponent class="menu-container" />
-    <RouterView class="main-view-container" />
+  <div :class="['main-container', darkMode ? 'dark-mode' : '']">
+    <MenuComponent @toggle-dark-mode="toggleDarkMode" class="menu-container" />
+    <RouterView :darkMode="darkMode" class="main-view-container" />
   </div>
 </template>
+
+<script>
+import { RouterView } from 'vue-router'
+import MenuComponent from './components/MenuComponent.vue'
+import { ref } from 'vue'
+
+export default {
+  components: {
+    MenuComponent
+  },
+  setup() {
+    const darkMode = ref(false)
+
+    const toggleDarkMode = () => {
+      darkMode.value = !darkMode.value
+    }
+
+    return {
+      darkMode,
+      toggleDarkMode
+    }
+  }
+}
+</script>
 
 <style scoped>
 .main-container {
@@ -24,5 +43,10 @@ import MenuComponent from './components/MenuComponent.vue'
 
 .main-view-container {
   flex: 0 0 80%;
+}
+
+.dark-mode {
+  background-color: #333;
+  color: #fff;
 }
 </style>

@@ -13,7 +13,7 @@
         <PrimeButton
           label="Toggle Dark Mode"
           class="p-button-outlined mt-3"
-          @click="toggleDarkMode"
+          @click="$emit('toggle-dark-mode')"
         />
         <PrimeButton label="Close" class="p-button mt-3" @click="toggleMenu" />
       </div>
@@ -29,23 +29,17 @@ export default {
   components: {
     PrimeButton: PrimeVueButton
   },
+  props: ['darkMode'],
   setup() {
     const visible = ref(false)
-    const darkMode = ref(false)
 
     const toggleMenu = () => {
       visible.value = !visible.value
     }
 
-    const toggleDarkMode = () => {
-      darkMode.value = !darkMode.value
-    }
-
     return {
       visible,
-      darkMode,
-      toggleMenu,
-      toggleDarkMode
+      toggleMenu
     }
   }
 }
