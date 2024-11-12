@@ -1,8 +1,15 @@
 <template>
   <div :class="['menu-container', darkMode ? 'dark-mode' : '']">
-    <div :class="['custom-sidebar', visible ? 'open' : 'closed']" @click="toggleMenu">
+    <div :class="['custom-sidebar', visible ? 'open' : 'closed']">
+      <div class="header" v-if="visible">
+        <h2>LifeHub</h2>
+        <i
+          :class="['toggle-icon', 'pi', visible ? 'pi-angle-left' : 'pi-angle-right']"
+          @click="toggleMenu"
+        ></i>
+      </div>
+      <i v-else :class="['toggle-icon', 'pi', 'pi-angle-right']" @click="toggleMenu"></i>
       <template v-if="visible">
-        <h2>Menu</h2>
         <nav class="menu-items">
           <router-link to="/" class="menu-link">Home</router-link>
           <router-link to="/jira" class="menu-link">Jira</router-link>
@@ -15,8 +22,6 @@
           @click="$emit('toggle-dark-mode')"
         />
       </template>
-      <!-- 显示箭头图标 -->
-      <i :class="['toggle-icon', visible ? 'pi pi-angle-left' : 'pi pi-angle-right']"></i>
     </div>
   </div>
 </template>
@@ -59,21 +64,24 @@ export default {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   padding: 1rem;
-  overflow-y: auto;
-  transition:
-    width 0.3s ease,
-    transform 0.3s ease;
+  overflow-y: hidden; /* 默认隐藏滚动条 */
+  transition: width 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 
 .custom-sidebar.open {
   width: 300px;
+  overflow-y: auto; /* 菜单展开时允许滚动 */
 }
 
 .custom-sidebar.closed {
   width: 40px; /* 只显示箭头按钮的宽度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 收起时完全隐藏滚动条 */
 }
 
 .dark-mode .custom-sidebar {
@@ -81,12 +89,32 @@ export default {
   color: #fff;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.toggle-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: inherit;
+}
+
+/* 调整收起状态下的箭头位置 */
+.custom-sidebar.closed .toggle-icon {
+  position: relative;
+  font-size: 2rem;
+}
+
+/* 菜单内容 */
 .menu-items {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 0;
-  margin: 0;
+  margin: 1rem 0 0;
 }
 
 .menu-link {
@@ -100,15 +128,6 @@ export default {
 
 .menu-link:hover {
   background-color: rgba(0, 0, 0, 0.1);
-}
-
-.toggle-icon {
-  position: absolute;
-  bottom: 20px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  transition: transform 0.3s ease;
-  color: inherit;
 }
 
 /* 响应式设计 */
