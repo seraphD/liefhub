@@ -8,6 +8,7 @@
 <script>
 import { RouterView } from 'vue-router'
 import MenuComponent from './components/MenuComponent.vue'
+import 'primeicons/primeicons.css'
 import { ref } from 'vue'
 
 export default {

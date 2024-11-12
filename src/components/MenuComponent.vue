@@ -1,23 +1,23 @@
 <template>
   <div :class="['menu-container', darkMode ? 'dark-mode' : '']">
-    <PrimeButton icon="pi pi-bars" class="toggle-button" @click="toggleMenu" />
-    <transition name="slide">
-      <div v-if="visible" class="custom-sidebar">
+    <div :class="['custom-sidebar', visible ? 'open' : 'closed']" @click="toggleMenu">
+      <template v-if="visible">
         <h2>Menu</h2>
-        <ul class="menu-items">
+        <nav class="menu-items">
           <router-link to="/" class="menu-link">Home</router-link>
           <router-link to="/jira" class="menu-link">Jira</router-link>
           <router-link to="/finance" class="menu-link">Finance</router-link>
           <router-link to="/fitness" class="menu-link">Fitness</router-link>
-        </ul>
+        </nav>
         <PrimeButton
           label="Toggle Dark Mode"
           class="p-button-outlined mt-3"
           @click="$emit('toggle-dark-mode')"
         />
-        <PrimeButton label="Close" class="p-button mt-3" @click="toggleMenu" />
-      </div>
-    </transition>
+      </template>
+      <!-- 显示箭头图标 -->
+      <i :class="['toggle-icon', visible ? 'pi pi-angle-left' : 'pi pi-angle-right']"></i>
+    </div>
   </div>
 </template>
 
@@ -54,13 +54,26 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
   height: 100vh;
   background-color: #f4f4f4;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   padding: 1rem;
   overflow-y: auto;
+  transition:
+    width 0.3s ease,
+    transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-sidebar.open {
+  width: 300px;
+}
+
+.custom-sidebar.closed {
+  width: 40px; /* 只显示箭头按钮的宽度 */
 }
 
 .dark-mode .custom-sidebar {
@@ -71,6 +84,7 @@ export default {
 .menu-items {
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 0;
   margin: 0;
 }
@@ -88,26 +102,18 @@ export default {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.toggle-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1100;
-}
-
-/* 添加简单的侧边栏动画 */
-.slide-enter-active,
-.slide-leave-active {
+.toggle-icon {
+  position: absolute;
+  bottom: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
   transition: transform 0.3s ease;
-}
-.slide-enter-from,
-.slide-leave-to {
-  transform: translateX(-100%);
+  color: inherit;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .custom-sidebar {
+  .custom-sidebar.open {
     width: 100%;
   }
 }
